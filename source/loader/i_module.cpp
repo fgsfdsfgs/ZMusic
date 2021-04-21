@@ -36,8 +36,16 @@
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#else
+#elif !defined(NO_RTLD)
 #include <dlfcn.h>
+#else
+// no rtld, provide stubs
+#ifndef RTLD_LAZY
+#define RTLD_LAZY 0
+#endif
+#define dlopen(x, y) (NULL)
+#define dlsym(x, y) (NULL)
+#define dlclose(x)
 #endif
 
 

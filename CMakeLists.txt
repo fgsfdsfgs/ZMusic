@@ -37,6 +37,11 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "Install path prefix" FORCE)
 endif()
 
+# disable loader on platforms with no rtld
+if(NSWITCH)
+	set(NO_RTLD ON)
+endif()
+
 if(MSVC)
 	#  optionally generate assembly output for checking crash locations.
 	option(ZMUSIC_GENERATE_ASM "Generate assembly output." OFF)
@@ -92,6 +97,11 @@ else()
 			add_compile_options("-static-libgcc")
 		endif()
 	endif()
+endif()
+
+if(NO_RTLD)
+	message("loader disabled on this platform")
+	add_compile_definitions("NO_RTLD")
 endif()
 
 # Initialize our list of find_package dependencies for configure_package_config_file
