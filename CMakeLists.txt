@@ -54,7 +54,7 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 # disable loader on platforms with no rtld
-if(NSWITCH)
+if(NINTENDO_SWITCH)
 	set(NO_RTLD ON)
 endif()
 
